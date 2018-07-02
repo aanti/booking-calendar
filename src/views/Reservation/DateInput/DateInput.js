@@ -10,6 +10,15 @@ import './DateInput.css'
 
 const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21']
 
+const CalendarFooter = ({ updateDate }) => (
+  <div>
+    <div>Minimum stay varies</div>
+    {
+      (updateDate) ? <div>Updated {updateDate} days ago</div> : null
+    }
+  </div>
+)
+
 const getAvailableEndDates = (selection, reservation = [], max = 14) => {
   if (!selection || !selection.start) return []
   let i = 0, day = Dates.getNextDay(selection.start)
@@ -90,6 +99,7 @@ class DateInput extends Component {
               availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
               reservation={ReservationDates}
               mode={mode}
+              footerComponent={<CalendarFooter />}
               onDayClick={this.handleDayClick}
             />
           )

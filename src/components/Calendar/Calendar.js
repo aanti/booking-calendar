@@ -9,7 +9,18 @@ import Marker from '../Marker/Marker'
 
 import CalendarMonth from './CalendarMonth/CalendarMonth'
 
-const CalendarContent = ({ month, year, availableDates, selection, reservation, mode, onNextMonthClick, onPrevMonthClick, onDayClick }) => {
+const CalendarContent = ({
+  month,
+  year,
+  availableDates,
+  selection,
+  reservation,
+  mode,
+  footerComponent = null,
+  onNextMonthClick,
+  onPrevMonthClick,
+  onDayClick
+}) => {
   const prevButtonDisabled = Dates.isBefore(Dates.getDateString(year, month, 1))
   return (
     <div style={{ textAlign: 'center' }}>
@@ -22,6 +33,7 @@ const CalendarContent = ({ month, year, availableDates, selection, reservation, 
         <ArrowButton direction="right" onClick={onNextMonthClick} />
       </div>
       <CalendarMonth year={year} month={month} mode={mode} availableDates={availableDates} selection={selection} reservation={reservation} n={Dates.getNumberOfDays(year, month)} startDay={Dates.getDayOfWeek(year, month, 1)} onDayClick={onDayClick} />
+      {footerComponent}
     </div>
   )
 }
@@ -38,14 +50,14 @@ const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, children })
 )
 
 class Calendar extends Component {
-  constructor () {
-    super()
-    const currentDate = new Date()
-    // TODO: if selection exitsts initialState should show selected dates
+  constructor (props) {
+    super(props)
+    const { selection: { start } } = props
+    const defaultDate = start ? Dates.stringToObject(start) : Dates.dateToObject(new Date())
     this.state = {
       date: {
-        year: currentDate.getFullYear(),
-        month: currentDate.getMonth() + 1
+        year: defaultDate.year,
+        month: defaultDate.month
       }
     }
   }
@@ -59,11 +71,11 @@ class Calendar extends Component {
   }
 
   render () {
-    const { selection, reservation, availableDates, mode, onDayClick } = this.props
+    const { selection, reservation, availableDates, mode, footerComponent, onDayClick } = this.props
     return (
       <div style={{ padding: 20 }}>
         <CalendarPaper markerPosition="right">
-          <CalendarContent {...this.state.date} selection={selection} reservation={reservation} availableDates={availableDates} mode={mode} onPrevMonthClick={this.handlePrevMonthClick} onNextMonthClick={this.handleNextMonthClick} onDayClick={onDayClick} />
+          <CalendarContent {...this.state.date} footerComponent={footerComponent} selection={selection} reservation={reservation} availableDates={availableDates} mode={mode} onPrevMonthClick={this.handlePrevMonthClick} onNextMonthClick={this.handleNextMonthClick} onDayClick={onDayClick} />
         </CalendarPaper>
       </div>
     )

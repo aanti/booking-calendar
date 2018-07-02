@@ -16,6 +16,11 @@ const DayType = {
   selected: 'selected'
 }
 
+const ClickableDayType = {
+  checkin: [DayType.available],
+  checkout: [DayType.possible]
+}
+
 const isEmptyCell = (day, n) => {
   return (day <= 0 || day > n)
 }
@@ -27,11 +32,6 @@ const getTypes = (date, reservation, selection, availableDates) => {
     (availableDates.includes(date)) && DayType.possible,
     (reservation.includes(date) || Dates.isBefore(date)) ? DayType.disabled : DayType.available
   ].filter(v => v)
-}
-
-const ClickableDayType = {
-  checkin: ['available'],
-  checkout: ['possible']
 }
 
 const getTypeClassNames = (types = []) => types.reduce((prev, curr) => prev.concat(`calendarMonth__day--${curr} `), '')

@@ -55,6 +55,15 @@ export const dateToString = date => {
   return getDateString(year, month + 1, day)
 }
 
+export const dateToObject = date => {
+  const dateOb = new Date(date)
+  return {
+    year: dateOb.getFullYear(),
+    month: dateOb.getMonth() + 1,
+    day: dateOb.getDate()
+  }
+}
+
 export const getNextDay = (date) => {
   const stringDate = typeof date === 'object' ? objectToString(date) : date
   const timestamp = new Date(stringDate).getTime() + MsPerDay
