@@ -1,0 +1,42 @@
+.calendar {
+  padding: 20px;
+}
+
+.calendarPaper {
+  position: relative;
+  width: 380px;
+}
+
+.calendarPaper__marker {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: -12px;
+}
+
+.calendarPaper__content {
+  border: 1px solid #c8c8c8;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.calendarContent {
+  text-align: center;
+}
+
+.calendarContent__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.calendarContent__nav__date {
+  font-weight: 900;
+  font-size: 22px;
+  color: #333;
+}
+
+.calendarContent__nav__date > :first-child {
+  padding-right: 10px;
+}

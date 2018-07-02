@@ -9,41 +9,48 @@ import Marker from '../Marker/Marker'
 
 import CalendarMonth from './CalendarMonth/CalendarMonth'
 
+import './Calendar.css'
+
 const CalendarContent = ({
   month,
   year,
-  availableDates,
-  selection,
-  reservation,
-  mode,
   footerComponent = null,
   onNextMonthClick,
   onPrevMonthClick,
-  onDayClick
+  ...props
 }) => {
   const prevButtonDisabled = Dates.isBefore(Dates.getDateString(year, month, 1))
   return (
-    <div style={{ textAlign: 'center' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 5 }}>
+    <div className="calendarContent">
+      <div className="calendarContent__nav">
         <ArrowButton onClick={onPrevMonthClick} disabled={prevButtonDisabled} />
-        <div style={{ fontWeight: 900, fontSize: 22, color: "#333" }}>
-          <span style={{ paddingRight: 10 }}>{Dates.getMonthName(month)}</span>
+        <div className="calendarContent__nav__date">
+          <span>{Dates.getMonthName(month)}</span>
           <span>{year}</span>
         </div>
         <ArrowButton direction="right" onClick={onNextMonthClick} />
       </div>
-      <CalendarMonth year={year} month={month} mode={mode} availableDates={availableDates} selection={selection} reservation={reservation} n={Dates.getNumberOfDays(year, month)} startDay={Dates.getDayOfWeek(year, month, 1)} onDayClick={onDayClick} />
+      <CalendarMonth
+        year={year}
+        month={month}
+        n={Dates.getNumberOfDays(year, month)}
+        startDay={Dates.getDayOfWeek(year, month, 1)}
+        {...props}
+      />
       {footerComponent}
     </div>
   )
 }
 
 const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, children }) => (
-  <div style={{ position: 'relative', width: 380 }}>
-    <div style={{ width: 26, height: 26, position: 'absolute', top: -12, ...(markerPosition === 'left' ? { left: markerOffset } : { right: markerOffset }) }}>
+  <div className="calendarPaper">
+    <div
+      className="calendarPaper__marker"
+      style={{ ...(markerPosition === 'left' ? { left: markerOffset } : { right: markerOffset }) }}
+    >
       <Marker />
     </div>
-    <div style={{ border: '1px solid #c8c8c8', borderRadius: 4, padding: 20 }}>
+    <div className="calendarPaper__content">
       {children}
     </div>
   </div>
@@ -73,9 +80,14 @@ class Calendar extends Component {
   render () {
     const { selection, reservation, availableDates, mode, footerComponent, onDayClick } = this.props
     return (
-      <div style={{ padding: 20 }}>
-        <CalendarPaper markerPosition="right">
-          <CalendarContent {...this.state.date} footerComponent={footerComponent} selection={selection} reservation={reservation} availableDates={availableDates} mode={mode} onPrevMonthClick={this.handlePrevMonthClick} onNextMonthClick={this.handleNextMonthClick} onDayClick={onDayClick} />
+      <div className="calendar">
+        <CalendarPaper markerPosition={mode === 'checkin' ? 'left' : 'right'}>
+          <CalendarContent
+            {...this.state.date}
+            {...this.props}
+            onPrevMonthClick={this.handlePrevMonthClick}
+            onNextMonthClick={this.handleNextMonthClick}
+          />
         </CalendarPaper>
       </div>
     )
