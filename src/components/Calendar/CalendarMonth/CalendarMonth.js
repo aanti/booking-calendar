@@ -12,6 +12,7 @@ const Day = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 const DayType = {
   available: 'available',
   disabled: 'disabled',
+  possible: 'possible',
   reserved: 'reserved',
   selected: 'selected',
   today: 'today'
@@ -21,7 +22,25 @@ const isEmptyCell = (day, n) => {
   return (day <= 0 || day > n)
 }
 
-const DayTableCell = ({ month, year, day, n, type = 'available', onDayClick }) => {
+const getType = (date, reservation, selection, availableDates) => {
+  //console.log('getType', date, reservation, reservation.includes(date))
+  let type = 'available'
+  if (selection.start === date) {
+    type = 'selected'
+  } else if (availableDates.includes(date)) {
+    type = 'possible'
+  } else if (reservation.includes(date) || Dates.isBefore(date)) {
+    type = 'disabled'
+  }
+  return type
+}
+
+const ClickableDayType = {
+  checkin: ['available', 'possible'],
+  checkout: ['possible']
+}
+
+const DayTableCell = ({ month, year, day, n, type = 'available', mode, onDayClick }) => {
   const isEmpty = isEmptyCell(day, n)
   const date = Dates.getDateString(year, month, day)
   return (
@@ -33,13 +52,13 @@ const DayTableCell = ({ month, year, day, n, type = 'available', onDayClick }) =
           ?
             <div style={{ height: 46, backgroundColor: '#fff' }} />
           :
-            <SingleDay number={day} onClick={() => onDayClick(date)} type={Dates.isBefore(date) ? 'disabled' : undefined} />
+            <SingleDay number={day} onClick={() => { ClickableDayType[mode].includes(type) && onDayClick(date) }} type={type} />
       }
     </td>
   )
 }
 
-const CalendarMonth = ({ year, month, n = 28, startDay = 5, current, selected = 40, size = 46, onDayClick }) => (
+const CalendarMonth = ({ year, month, n = 28, startDay = 5, current, mode, selection, reservation = [], selected = [], availableDates = [], size = 46, onDayClick }) => (
   <div>
     <table className="calendarMonth">
       <tr className="calendarMonth__header">
@@ -60,6 +79,8 @@ const CalendarMonth = ({ year, month, n = 28, startDay = 5, current, selected = 
                     day={day - startDay}
                     month={month}
                     year={year}
+                    mode={mode}
+                    type={getType(Dates.getDateString(year, month, day), reservation, selection, availableDates)}
                     n={n}
                     onDayClick={onDayClick}
                   />

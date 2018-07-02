@@ -9,7 +9,7 @@ import Marker from '../Marker/Marker'
 
 import CalendarMonth from './CalendarMonth/CalendarMonth'
 
-const CalendarContent = ({ month, year, onNextMonthClick, onPrevMonthClick, onDayClick }) => {
+const CalendarContent = ({ month, year, availableDates, selection, reservation, mode, onNextMonthClick, onPrevMonthClick, onDayClick }) => {
   const prevButtonDisabled = Dates.isBefore(Dates.getDateString(year, month, 1))
   return (
     <div style={{ textAlign: 'center' }}>
@@ -21,7 +21,7 @@ const CalendarContent = ({ month, year, onNextMonthClick, onPrevMonthClick, onDa
         </div>
         <ArrowButton direction="right" onClick={onNextMonthClick} />
       </div>
-      <CalendarMonth year={year} month={month} n={Dates.getNumberOfDays(year, month)} startDay={Dates.getDayOfWeek(year, month, 1)} onDayClick={onDayClick} />
+      <CalendarMonth year={year} month={month} mode={mode} availableDates={availableDates} selection={selection} reservation={reservation} n={Dates.getNumberOfDays(year, month)} startDay={Dates.getDayOfWeek(year, month, 1)} onDayClick={onDayClick} />
     </div>
   )
 }
@@ -41,6 +41,7 @@ class Calendar extends Component {
   constructor () {
     super()
     const currentDate = new Date()
+    // TODO: if selection exitsts initialState should show selected dates
     this.state = {
       date: {
         year: currentDate.getFullYear(),
@@ -58,11 +59,11 @@ class Calendar extends Component {
   }
 
   render () {
-    const { onDayClick } = this.props
+    const { selection, reservation, availableDates, mode, onDayClick } = this.props
     return (
       <div style={{ padding: 20 }}>
         <CalendarPaper markerPosition="right">
-          <CalendarContent {...this.state.date} onPrevMonthClick={this.handlePrevMonthClick} onNextMonthClick={this.handleNextMonthClick} onDayClick={onDayClick} />
+          <CalendarContent {...this.state.date} selection={selection} reservation={reservation} availableDates={availableDates} mode={mode} onPrevMonthClick={this.handlePrevMonthClick} onNextMonthClick={this.handleNextMonthClick} onDayClick={onDayClick} />
         </CalendarPaper>
       </div>
     )

@@ -8,6 +8,21 @@ import * as Dates from '../../../utils/dates/dates'
 
 import './DateInput.css'
 
+const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21']
+
+const getAvailableEndDates = (selection, reservation = [], max = 14) => {
+  if (!selection || !selection.start) return []
+  let i = 0, day = Dates.getNextDay(selection.start)
+  console.log(i, day)
+  const result = []
+  while (i < max && !reservation.includes(day)) {
+    result.push(day)
+    day = Dates.getNextDay(day)
+    i++
+  }
+  console.log('koniec')
+  return result
+}
 
 class DateInput extends Component {
   constructor () {
@@ -49,6 +64,8 @@ class DateInput extends Component {
 
   render () {
     const { calendarOpen, value, mode } = this.state
+    console.log(getAvailableEndDates({ start: '2018/07/01' }, ReservationDates))
+    //console.log(Dates.getNextDay("2018/07/07"))
     return (
       <div className="dateInput">
         <span className="dateInput__label">Dates</span>
@@ -66,7 +83,15 @@ class DateInput extends Component {
           </div>
         </div>
         {
-          mode !== 'off' && <Calendar onDayClick={this.handleDayClick} />
+          mode !== 'off' && (
+            <Calendar
+              selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
+              availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
+              reservation={ReservationDates}
+              mode={mode}
+              onDayClick={this.handleDayClick}
+            />
+          )
         }
       </div>
     )

@@ -26,12 +26,24 @@
   background-color: #fff;
 }
 
+.calendarMonth__day--disabled {
+  background-color: #f5f5f5;
+}
+
+.calendarMonth__day--selected {
+  background-color: #aceae7;
+}
+
+.calendarMonth__day--possible {
+  background-color: rgba(172, 234, 231, 0.5);
+}
+
 .calendarMonth__day--today {
   background-color: #2b81af;
 }
 
 .calendarMonth__day--nonEmpty:hover {
-  background-color: #e8e8e8;
+  background-color: #aceae7;
 }
 
 .calendarMonth__day--nonEmpty:active {

@@ -18,15 +18,16 @@
 }
 
 .dateInput__check {
-   flex: 1 0 100px;
-   padding: 5px 10px;
-   border-radius: 3px;
-   font-size: 20px;
-   font-weight: 400;
-   color: #6a6a6a;
-   cursor: pointer;
-   user-select: none;
- }
+  flex: 1 0 100px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #6a6a6a;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
 
 .dateInput__check:hover {
   background-color: #f5f5f5;

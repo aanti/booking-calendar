@@ -1,4 +1,5 @@
 export const Day = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+const MsPerDay = 86400000
 
 const Month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -29,3 +30,40 @@ const make2Chars = num => ('0' + num).slice(-2)
 export const getDateString = (year, month, day) => `${year}/${make2Chars(month)}/${make2Chars(day)}`
 
 export const isBefore = (date1, date2 = new Date()) => new Date(date1).getTime() < new Date(date2).getTime()
+
+export const isAfter = (date1, date2 = new Date()) => new Date(date1).getTime() > new Date(date2).getTime()
+
+export const stringToObject = (stringDate) => {
+  const date = new Date(stringDate)
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDay() + 1
+    }
+}
+
+export const objectToString = (objectDate) => {
+  const { year, month, day } = objectDate
+  return getDateString(year, month, day)
+}
+
+export const dateToString = date => {
+  console.log('date to string')
+  const dateOb = new Date(date)
+  console.log('a', dateOb)
+  const year = dateOb.getFullYear()
+  const month = dateOb.getMonth()
+  const day = dateOb.getDate()
+  console.log(year, month, day)
+  return getDateString(year, month + 1, day)
+}
+
+export const getNextDay = (date) => {
+  const stringDate = typeof date === 'object' ? objectToString(date) : date
+  console.log('string date', stringDate)
+  const timestamp = new Date(stringDate).getTime() + MsPerDay
+  console.log(timestamp, new Date(timestamp))
+  return typeof date === 'object' ? stringToObject(timestamp) : dateToString(timestamp)
+}
+
+export const getDayDiff = (date1, date2) => (Math.abs(new Date(date1).getTime() - new Date(date2).getTime())) / MsPerDay
