@@ -20,6 +20,7 @@
 
 .calendarMonth__day--empty {
   border: 0px solid lightgray;
+  background-color: #fff;
 }
 
 .calendarMonth__day--available {

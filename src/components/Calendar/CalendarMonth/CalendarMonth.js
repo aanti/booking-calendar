@@ -30,7 +30,7 @@ const getTypes = (date, reservation, selection, availableDates) => {
 }
 
 const ClickableDayType = {
-  checkin: ['available', 'possible'],
+  checkin: ['available'],
   checkout: ['possible']
 }
 
@@ -48,7 +48,7 @@ const DayTableCell = ({ month, year, day, n, types = ['available'], mode, onDayC
           ?
             <div style={{ height: 46, backgroundColor: '#fff' }} />
           :
-            <SingleDay number={day} onClick={() => { onDayClick(date) }} types={types} />
+            <SingleDay number={day} onClick={() => { ClickableDayType[mode].every(type => types.includes(type)) && onDayClick(date) }} types={types} />
       }
     </td>
   )
