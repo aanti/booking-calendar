@@ -19,6 +19,7 @@
 }
 
 .calendarMonth__day--empty {
+  height: 46px;
   border: 0px solid lightgray;
   background-color: #fff;
 }
