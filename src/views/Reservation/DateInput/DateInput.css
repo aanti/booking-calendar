@@ -1,0 +1,45 @@
+.dateInput {
+  padding: 20px 0;
+}
+
+.dateInput__label {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.dateInput__dates {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  margin-top: 5px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dateInput__check {
+   flex: 1 0 100px;
+   padding: 5px 10px;
+   border-radius: 3px;
+   font-size: 20px;
+   font-weight: 400;
+   color: #6a6a6a;
+   cursor: pointer;
+   user-select: none;
+ }
+
+.dateInput__check:hover {
+  background-color: #f5f5f5;
+}
+
+.dateInput__check--checked {
+  background-color: #aceae7;
+}
+
+.dateInput__check--checked:hover {
+  background-color: #aceae7;
+}
+
+.dateInput__arrow {
+  flex: 1 0 50px;
+}

@@ -1,0 +1,35 @@
+.arrowButton {
+  width: 40px;
+  height: 34px;
+  border-radius: 3px;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  border: 1px solid lightgray;
+}
+
+.arrowButton > svg {
+  width: 50%;
+}
+
+.arrowButton--active:hover {
+  background-color: #d8d8d8;
+}
+
+.arrowButton--active:active {
+  background-color: #c6c6c6;
+}
+
+.arrowButton--active {
+  cursor: pointer;
+}
+
+.arrowButton--disabled {
+  border-color: #e8e8e8;
+}
+
+.arrowButton--disabled > svg {
+  fill: #e8e8e8;
+}

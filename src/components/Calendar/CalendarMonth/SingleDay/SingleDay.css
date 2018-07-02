@@ -1,0 +1,12 @@
+.singleDay {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.singleDay--disabled {
+  color: lightgray;
+  text-decoration: line-through;
+}

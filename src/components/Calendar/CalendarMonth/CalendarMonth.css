@@ -1,0 +1,39 @@
+.calendarMonth {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.calendarMonth__header {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.calendarMonth__day {
+  font-weight: 600;
+  box-sizing: border-box;
+  color: gray;
+  font-size: 14px;
+  border: 1px solid lightgray;
+}
+
+.calendarMonth__day--empty {
+  border: 0px solid lightgray;
+}
+
+.calendarMonth__day--available {
+  background-color: #fff;
+}
+
+.calendarMonth__day--today {
+  background-color: #2b81af;
+}
+
+.calendarMonth__day--nonEmpty:hover {
+  background-color: #e8e8e8;
+}
+
+.calendarMonth__day--nonEmpty:active {
+  background-color: #c8c8c8;
+}

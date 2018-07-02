@@ -1,0 +1,35 @@
+.basicInfo {
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 20px;
+}
+
+.basicInfo__priceSection {
+  font-weight: 800;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.basicInfo__currency {
+  margin-left: 5px;
+}
+
+.basicInfo__priceInfo {
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.basicInfo__rating {
+  height: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.basicInfo__rating > :first-child {
+  margin-right: 4px;
+}
+
+.basicInfo__rating> :last-child {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}

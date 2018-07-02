@@ -1,0 +1,27 @@
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating__item {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+
+.rating__starInner {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.rating__starInner--empty {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
