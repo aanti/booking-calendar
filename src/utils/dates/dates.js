@@ -48,22 +48,26 @@ export const objectToString = (objectDate) => {
 }
 
 export const dateToString = date => {
-  console.log('date to string')
   const dateOb = new Date(date)
-  console.log('a', dateOb)
   const year = dateOb.getFullYear()
   const month = dateOb.getMonth()
   const day = dateOb.getDate()
-  console.log(year, month, day)
   return getDateString(year, month + 1, day)
 }
 
 export const getNextDay = (date) => {
   const stringDate = typeof date === 'object' ? objectToString(date) : date
-  console.log('string date', stringDate)
   const timestamp = new Date(stringDate).getTime() + MsPerDay
-  console.log(timestamp, new Date(timestamp))
   return typeof date === 'object' ? stringToObject(timestamp) : dateToString(timestamp)
 }
 
 export const getDayDiff = (date1, date2) => (Math.abs(new Date(date1).getTime() - new Date(date2).getTime())) / MsPerDay
+
+export const getDaysArray = ({ start, n }) => {
+  const result = [start]
+  let i
+  for (i = 0; i < n; i++) {
+    result.push(getNextDay(result[i]))
+  }
+  return result
+}

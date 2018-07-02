@@ -13,26 +13,20 @@ const DayType = {
   available: 'available',
   disabled: 'disabled',
   possible: 'possible',
-  reserved: 'reserved',
-  selected: 'selected',
-  today: 'today'
+  selected: 'selected'
 }
 
 const isEmptyCell = (day, n) => {
   return (day <= 0 || day > n)
 }
 
-const getType = (date, reservation, selection, availableDates) => {
-  //console.log('getType', date, reservation, reservation.includes(date))
-  let type = 'available'
-  if (selection.start === date) {
-    type = 'selected'
-  } else if (availableDates.includes(date)) {
-    type = 'possible'
-  } else if (reservation.includes(date) || Dates.isBefore(date)) {
-    type = 'disabled'
-  }
-  return type
+const getTypes = (date, reservation, selection, availableDates) => {
+  const selectionDates = Dates.getDaysArray(selection)
+  return [
+    (selectionDates.includes(date)) && DayType.selected,
+    (availableDates.includes(date)) && DayType.possible,
+    (reservation.includes(date) || Dates.isBefore(date)) ? DayType.disabled : DayType.available
+  ].filter(v => v)
 }
 
 const ClickableDayType = {
@@ -40,19 +34,21 @@ const ClickableDayType = {
   checkout: ['possible']
 }
 
-const DayTableCell = ({ month, year, day, n, type = 'available', mode, onDayClick }) => {
+const getTypeClassNames = (types = []) => types.reduce((prev, curr) => prev.concat(`calendarMonth__day--${curr} `), '')
+
+const DayTableCell = ({ month, year, day, n, types = ['available'], mode, onDayClick }) => {
   const isEmpty = isEmptyCell(day, n)
   const date = Dates.getDateString(year, month, day)
   return (
     <td
-      className={`calendarMonth__day calendarMonth__day--${isEmpty ? 'empty' : 'nonEmpty'} calendarMonth__day--${type} button`}
+      className={`calendarMonth__day calendarMonth__day--${isEmpty ? 'empty' : 'nonEmpty'} ${getTypeClassNames(types)} button`}
     >
       {
         (isEmpty)
           ?
             <div style={{ height: 46, backgroundColor: '#fff' }} />
           :
-            <SingleDay number={day} onClick={() => { ClickableDayType[mode].includes(type) && onDayClick(date) }} type={type} />
+            <SingleDay number={day} onClick={() => { onDayClick(date) }} types={types} />
       }
     </td>
   )
@@ -80,7 +76,7 @@ const CalendarMonth = ({ year, month, n = 28, startDay = 5, current, mode, selec
                     month={month}
                     year={year}
                     mode={mode}
-                    type={getType(Dates.getDateString(year, month, day), reservation, selection, availableDates)}
+                    types={getTypes(Dates.getDateString(year, month, day), reservation, selection, availableDates, mode)}
                     n={n}
                     onDayClick={onDayClick}
                   />

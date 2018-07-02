@@ -13,14 +13,13 @@ const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19'
 const getAvailableEndDates = (selection, reservation = [], max = 14) => {
   if (!selection || !selection.start) return []
   let i = 0, day = Dates.getNextDay(selection.start)
-  console.log(i, day)
   const result = []
   while (i < max && !reservation.includes(day)) {
     result.push(day)
     day = Dates.getNextDay(day)
     i++
   }
-  console.log('koniec')
+  result.push(day)
   return result
 }
 
@@ -53,10 +52,12 @@ class DateInput extends Component {
 
   handleDayClick = (date) => {
     console.log('handle day click', date)
+    const available = getAvailableEndDates({ start: date }, ReservationDates)
+    console.log(available)
     this.setState(({ value, mode }) => ({
       value: {
         ...value,
-        ...(mode === 'checkin' ? { from: date } : { to: date })
+        ...(mode === 'checkin' ? { from: date, ...(!available.includes(value.to) && { to: null }) } : { to: date })
       },
       mode: mode === 'checkin' ? 'checkout' : 'off'
     }))
@@ -64,7 +65,7 @@ class DateInput extends Component {
 
   render () {
     const { calendarOpen, value, mode } = this.state
-    console.log(getAvailableEndDates({ start: '2018/07/01' }, ReservationDates))
+    //console.log(getAvailableEndDates({ start: '2018/07/01' }, ReservationDates))
     //console.log(Dates.getNextDay("2018/07/07"))
     return (
       <div className="dateInput">
