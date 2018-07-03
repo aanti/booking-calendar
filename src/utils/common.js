@@ -6,7 +6,15 @@ export const ModeType = {
   checkout: 'checkout'
 }
 
+export const DayType = {
+  available: 'available',
+  disabled: 'disabled',
+  possible: 'possible',
+  selected: 'selected'
+}
+
 export const Props = {
+  dayTypes: PropTypes.arrayOf(PropTypes.oneOf([DayType.available, DayType.disabled, DayType.possible, DayType.selected])),
   mode: PropTypes.oneOf([ModeType.checkin, ModeType.checkout, ModeType.off]),
   selection: PropTypes.shape({
     start: PropTypes.string,

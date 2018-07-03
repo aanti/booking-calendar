@@ -3,10 +3,20 @@ import PropTypes from 'prop-types'
 
 import './ColoredButton.css'
 
-const ColoredButton = ({ children, label = 'BOOK', onClick = () => {} }) => (
-  <div className="coloredButton button shadow" style={{ textAlign: 'center', color: '#fff', maxWidth: 150, fontSize: 20, fontWeight: 600 }}>
+const ColoredButton = ({ children, label, onClick }) => (
+  <div className="coloredButton button shadow" onClick={onClick}>
     {children || label}
   </div>
 )
+
+ColoredButton.defaultProps = {
+  label: 'BOOK',
+  onClick: () => {}
+}
+
+ColoredButton.propTypes = {
+  label: PropTypes.string,
+  onClick: PropTypes.func
+}
 
 export default ColoredButton

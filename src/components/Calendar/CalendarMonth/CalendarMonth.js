@@ -4,8 +4,7 @@ import PropTypes from 'prop-types'
 import CalendarDay from './CalendarDay/CalendarDay'
 
 import { Dates, nArray } from '../../../utils'
-import { DayType } from './CalendarDay/CalendarDay'
-import { Props } from '../../../utils/common'
+import { Props, DayType } from '../../../utils/common'
 
 import './CalendarMonth.css'
 

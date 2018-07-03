@@ -11,10 +11,7 @@ const DirectionType = {
 }
 
 const ArrowButton = ({ direction, disabled, onClick }) => (
-  <div
-    className={`arrowButton arrowButton--${disabled ? 'disabled' : 'active'}`}
-    {...(!disabled && { onClick })}
-  >
+  <div className={`arrowButton arrowButton--${disabled ? 'disabled' : 'active'}`} {...(!disabled && { onClick })}>
     <Arrow direction={direction} color="gray" />
   </div>
 )

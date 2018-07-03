@@ -2,26 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { Dates, classes } from '../../../../utils'
+import { DayType, Props } from '../../../../utils/common'
 
 import './CalendarDay.css'
-
-const SingleDay = ({ number, active = true, selected, types, onClick }) => (
-  <div className={'singleDay'} onClick={onClick}>
-    {number}
-  </div>
-)
-
-export const DayType = {
-  available: 'available',
-  disabled: 'disabled',
-  possible: 'possible',
-  selected: 'selected'
-}
-
-const ClickableDayType = {
-  checkin: [DayType.available],
-  checkout: [DayType.possible]
-}
 
 const isEmptyCell = (day, n) => {
   return (day <= 0 || day > n)
@@ -29,7 +12,27 @@ const isEmptyCell = (day, n) => {
 
 const getClasses = (types = []) => types.reduce((prev, curr) => prev.concat(`calendarMonth__day--${curr} `), '')
 
-const CalendarDay = ({ month, year, day, n, types = ['available'], mode, onDayClick }) => {
+export const SingleDay = ({ number, onClick }) => (
+  <div className={'singleDay'} onClick={onClick}>
+    {number}
+  </div>
+)
+
+SingleDay.defaultProps = {
+  onClick: () => {}
+}
+
+SingleDay.propTypes = {
+  number: PropTypes.number.isRequired,
+  onClick: PropTypes.func
+}
+
+const ClickableDayType = {
+  checkin: [DayType.available],
+  checkout: [DayType.possible]
+}
+
+const CalendarDay = ({ month, year, day, n, types, mode, onDayClick }) => {
   const empty = isEmptyCell(day, n)
   const date = Dates.getDateString(year, month, day)
   return (
@@ -37,16 +40,31 @@ const CalendarDay = ({ month, year, day, n, types = ['available'], mode, onDayCl
       {
         (!empty)
           ?
-          <SingleDay
-            number={day}
-            onClick={() => { ClickableDayType[mode].every(type => types.includes(type)) && onDayClick(date) }}
-            types={types}
-          />
+            <SingleDay
+              number={day}
+              types={types}
+              {...(ClickableDayType[mode].every(type => types.includes(type)) && { onClick: () => onDayClick(date) } )}
+            />
           :
-          null
+            null
       }
     </td>
   )
+}
+
+CalendarDay.defaultProps = {
+  types: [DayType.available],
+  onDayClick: () => {}
+}
+
+CalendarDay.propTypes = {
+  year: PropTypes.number,
+  month: PropTypes.number,
+  day: PropTypes.number,
+  n: PropTypes.number,
+  types: Props.dayTypes,
+  mode: Props.mode,
+  onDayClick: PropTypes.func
 }
 
 export default CalendarDay
