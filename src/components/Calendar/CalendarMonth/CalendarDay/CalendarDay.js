@@ -6,11 +6,11 @@ import { DayType, Props } from '../../../../utils/common'
 
 import './CalendarDay.css'
 
-const isEmptyCell = (day, n) => {
+export const isEmptyCell = (day, n) => {
   return (day <= 0 || day > n)
 }
 
-const getClasses = (types = []) => types.reduce((prev, curr) => prev.concat(`calendarMonth__day--${curr} `), '')
+export const getClasses = (types = []) => types.reduce((prev, curr) => prev.concat(`calendarMonth__day--${curr} `), '')
 
 export const SingleDay = ({ number, onClick }) => (
   <div className={'singleDay'} onClick={onClick}>
