@@ -4,11 +4,17 @@ import PropTypes from 'prop-types'
 import Arrow from '../../../components/Arrow/Arrow'
 import Calendar from '../../../components/Calendar/Calendar'
 
-import * as Dates from '../../../utils/dates/dates'
+import { Dates, classes } from '../../../utils'
 
 import './DateInput.css'
 
 const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21']
+
+const ModeType = {
+  off: 'off',
+  checkin: 'checkin',
+  checkout: 'checkout'
+}
 
 const CalendarFooter = ({ updateDate }) => (
   <div>
@@ -32,13 +38,27 @@ const getAvailableEndDates = (selection, reservation = [], max = 14) => {
   return result
 }
 
+const CheckButton = ({ value, label, disabled, checked, onClick }) => {
+  const classnames = [
+    'dateInput__check',
+    'button',
+    checked && 'dateInput__check--checked',
+    disabled && 'dateInput__check--disabled'
+  ].filter(v => v)
+  return (
+    <div className={classes(classnames)} onClick={!disabled && onClick}>
+      {value || label}
+    </div>
+  )
+}
+
 class DateInput extends Component {
   constructor () {
     super()
 
     this.state = {
       calendarOpen: false,
-      mode: 'off',
+      mode: ModeType.off,
       value: {
         from: null,
         to: null
@@ -47,50 +67,49 @@ class DateInput extends Component {
   }
 
   handleInputClick = () => {
-    console.log('handle click')
     this.setState(({ calendarOpen }) => ({ calendarOpen: !calendarOpen }))
   }
 
   handleCheckInClick = () => {
-    this.setState(({ mode }) => ({ mode: mode === 'checkin' ? 'off' : 'checkin' }))
+    this.setState(({ mode }) => ({ mode: mode === ModeType.checkin ? ModeType.off : ModeType.checkin }))
   }
 
   handleCheckOutClick = () => {
-    this.setState(({ mode }) => ({ mode: mode === 'checkout' ? 'off' : 'checkout' }))
+    this.setState(({ mode }) => ({ mode: mode === ModeType.checkout ? ModeType.off : ModeType.checkout }))
   }
 
   handleDayClick = (date) => {
-    console.log('handle day click', date)
     const available = getAvailableEndDates({ start: date }, ReservationDates)
     console.log(available)
     this.setState(({ value, mode }) => ({
       value: {
         ...value,
-        ...(mode === 'checkin' ? { from: date, ...(!available.includes(value.to) && { to: null }) } : { to: date })
+        ...(mode === ModeType.checkin ? { from: date, ...(!available.includes(value.to) && { to: null }) } : { to: date })
       },
-      mode: mode === 'checkin' ? 'checkout' : 'off'
+      mode: mode === ModeType.checkin ? ModeType.checkout : ModeType.off
     }))
   }
 
   render () {
     const { calendarOpen, value, mode } = this.state
-    //console.log(getAvailableEndDates({ start: '2018/07/01' }, ReservationDates))
-    //console.log(Dates.getNextDay("2018/07/07"))
     return (
       <div className="dateInput">
         <span className="dateInput__label">Dates</span>
         <div className="dateInput__dates">
-          <div className={`dateInput__check ${mode === 'checkin' && 'dateInput__check--checked'} button`} onClick={this.handleCheckInClick}>
-            {
-              (value.from) || 'Check In'
-            }
-          </div>
+          <CheckButton
+            label="Check In"
+            value={value.from}
+            checked={mode === ModeType.checkin}
+            onClick={this.handleCheckInClick}
+          />
           <Arrow className="dateInput__arrow" color="#555555" direction="right" />
-          <div className={`dateInput__check ${mode === 'checkout' && 'dateInput__check--checked'} button`} onClick={this.handleCheckOutClick}>
-            {
-              (value.to) || 'Check Out'
-            }
-          </div>
+          <CheckButton
+            label="Check Out"
+            value={value.to}
+            checked={mode === ModeType.checkout}
+            disabled={!value.from}
+            onClick={this.handleCheckOutClick}
+          />
         </div>
         {
           mode !== 'off' && (

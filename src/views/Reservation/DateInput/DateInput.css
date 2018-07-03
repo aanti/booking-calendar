@@ -37,6 +37,14 @@
   background-color: #aceae7;
 }
 
+.dateInput__check--disabled {
+  cursor: default;
+}
+
+.dateInput__check--disabled:hover {
+  background-color: #fff;
+}
+
 .dateInput__check--checked:hover {
   background-color: #aceae7;
 }
