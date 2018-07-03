@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import * as Dates from '../../utils/dates/dates'
+import { Dates, outsideClickable } from '../../utils'
 
 import Section from '../Section/Section'
 import ArrowButton from '../Button/ArrowButton/ArrowButton'
@@ -78,13 +78,14 @@ class Calendar extends Component {
   }
 
   render () {
-    const { selection, reservation, availableDates, mode, footerComponent, onDayClick } = this.props
+    const { forwardedRef, mode, ...props } = this.props
     return (
-      <div className="calendar">
+      <div className="calendar" ref={forwardedRef}>
         <CalendarPaper markerPosition={mode === 'checkin' ? 'left' : 'right'}>
           <CalendarContent
             {...this.state.date}
-            {...this.props}
+            {...props}
+            mode={mode}
             onPrevMonthClick={this.handlePrevMonthClick}
             onNextMonthClick={this.handleNextMonthClick}
           />
@@ -98,4 +99,6 @@ Calendar.defaultProps = {
   onDayClick: () => {}
 }
 
-export default Calendar
+export default ({ onOutsideClick, ...rest }) => (onOutsideClick)
+  ? outsideClickable(React.forwardRef((props, ref) => <Calendar forwardedRef={ref} {...props} />))
+  : <Calendar {...rest} />

@@ -112,7 +112,7 @@ class DateInput extends Component {
           />
         </div>
         {
-          mode !== 'off' && (
+          (mode !== ModeType.off) && (
             <Calendar
               selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
               availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
