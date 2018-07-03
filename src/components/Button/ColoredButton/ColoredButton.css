@@ -1,0 +1,14 @@
+.coloredButton {
+  background-color: #fb724b;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 10px 20px;
+}
+
+.coloredButton:hover {
+  background-color: #8ad841;
+}
+
+.coloredButton:active {
+  box-shadow: none;
+}

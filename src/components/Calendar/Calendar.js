@@ -50,7 +50,7 @@ const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, forwardedRe
     >
       <Marker />
     </div>
-    <div className="calendarPaper__content">
+    <div className="calendarPaper__content shadow">
       {children}
     </div>
   </div>

@@ -53,18 +53,12 @@ const CheckButton = ({ value, label, disabled, checked, onClick }) => {
 }
 
 class DateInput extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      mode: ModeType.off,
-      value: {
-        from: null,
-        to: null
-      }
+  state = {
+    mode: ModeType.off,
+    value: {
+      from: null,
+      to: null
     }
-
-    this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
 
   handleOutsideClick = () => {
@@ -91,8 +85,14 @@ class DateInput extends Component {
     }))
   }
 
+  renderSummary = () => {
+    const { renderSummary } = this.props
+    const { value } = this.state
+    return (renderSummary && value.from && value.to) ? renderSummary(value) : null
+  }
+
   render () {
-    const { calendarOpen, value, mode } = this.state
+    const { calendarOpen, value, mode, renderSummary } = this.state
     return (
       <div className="dateInput">
         <span className="dateInput__label">Dates</span>
@@ -113,17 +113,19 @@ class DateInput extends Component {
           />
         </div>
         {
-          (mode !== ModeType.off) && (
-            <Calendar
-              selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
-              availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
-              reservation={ReservationDates}
-              mode={mode}
-              footerComponent={<CalendarFooter />}
-              onDayClick={this.handleDayClick}
-              onClickOutside={this.handleOutsideClick}
-            />
-          )
+          (mode !== ModeType.off)
+            ?
+              <Calendar
+                selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
+                availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
+                reservation={ReservationDates}
+                mode={mode}
+                footerComponent={<CalendarFooter />}
+                onDayClick={this.handleDayClick}
+                onClickOutside={this.handleOutsideClick}
+              />
+            :
+              this.renderSummary()
         }
       </div>
     )

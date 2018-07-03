@@ -6,12 +6,15 @@ import Calendar from '../../components/Calendar/Calendar'
 
 import BasicInfo from './BasicInfo/BasicInfo'
 import DateInput from './DateInput/DateInput'
+import Summary from './Summary/Summary'
+
+import './Reservation.css'
 
 const Reservation = ({ price, rating, availableDates }) => (
-  <div style={{ width: 480, backgroundColor: '#fff' }}>
+  <div className="reservation shadow">
     <Section>
       <BasicInfo price={price} rating={rating} />
-      <DateInput />
+      <DateInput renderSummary={value => <Summary {...value} price={price} />} />
     </Section>
   </div>
 )

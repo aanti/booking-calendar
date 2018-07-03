@@ -1,4 +1,6 @@
 .section {
-  border: 1px solid lightgray;
+  height: inherit;
+  box-sizing: border-box;
   padding: 25px;
+  border: 1px solid lightgray;
 }
