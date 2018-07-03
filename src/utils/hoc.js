@@ -10,19 +10,15 @@ export const outsideClickable =  (WrappedComponent) => (
     }
 
     componentDidMount(nextProps) {
-      console.log('add down event')
       document.addEventListener('mousedown', this.handleMouseDown)
     }
 
     componentWillUnmount () {
-      console.log('remove event')
       document.removeEventListener('mousedown', this.handleMouseDown)
     }
 
     handleMouseDown (e) {
       const { onClickOutside } = this.props
-      console.log(e)
-      console.log(this.element.current)
       if (this.element.current && !this.element.current.contains(e.target)) {
         onClickOutside && onClickOutside()
       }

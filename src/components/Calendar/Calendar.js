@@ -42,8 +42,8 @@ const CalendarContent = ({
   )
 }
 
-const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, children }) => (
-  <div className="calendarPaper">
+const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, forwardedRef, children }) => (
+  <div className="calendarPaper" ref={forwardedRef}>
     <div
       className="calendarPaper__marker"
       style={{ ...(markerPosition === 'left' ? { left: markerOffset } : { right: markerOffset }) }}
@@ -80,8 +80,8 @@ class Calendar extends Component {
   render () {
     const { forwardedRef, mode, ...props } = this.props
     return (
-      <div className="calendar" ref={forwardedRef}>
-        <CalendarPaper markerPosition={mode === 'checkin' ? 'left' : 'right'}>
+      <div className="calendar">
+        <CalendarPaper markerPosition={mode === 'checkin' ? 'left' : 'right'} forwardedRef={forwardedRef}>
           <CalendarContent
             {...this.state.date}
             {...props}
