@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 
 import CalendarDay from './CalendarDay/CalendarDay'
 
-import { Dates, classes, nArray } from '../../../utils'
+import { Dates, nArray } from '../../../utils'
 import { DayType } from './CalendarDay/CalendarDay'
+import { Props } from '../../../utils/common'
 
 import './CalendarMonth.css'
 
@@ -31,37 +32,54 @@ const CalendarMonth = ({
 }) => (
   <div>
     <table className="calendarMonth">
-      <tr className="calendarMonth__header">
+      <thead>
+        <tr className="calendarMonth__header">
+          {
+            nArray(7).map(day => (
+              <td key={day}>{Dates.Day[day]}</td>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
         {
-          nArray(7).map(day => (
-            <td>{Dates.Day[day]}</td>
+          nArray(6).map(week => (
+            <tr key={week}>
+              {
+                Array.from(Array(7).keys()).map(dayOfWeek => {
+                  const day = 7 * week + dayOfWeek + 1 - startDay
+                  return (
+                    <CalendarDay
+                      key={day}
+                      day={day}
+                      month={month}
+                      year={year}
+                      mode={mode}
+                      types={getTypes(Dates.getDateString(year, month, day), reservation, selection, availableDates)}
+                      n={n}
+                      onDayClick={onDayClick}
+                    />
+                  )
+                })
+              }
+            </tr>
           ))
         }
-      </tr>
-      {
-        nArray(6).map(week => (
-          <tr>
-            {
-              Array.from(Array(7).keys()).map(dayOfWeek => {
-                const day = 7 * week + dayOfWeek + 1 - startDay
-                return (
-                  <CalendarDay
-                    day={day}
-                    month={month}
-                    year={year}
-                    mode={mode}
-                    types={getTypes(Dates.getDateString(year, month, day), reservation, selection, availableDates)}
-                    n={n}
-                    onDayClick={onDayClick}
-                  />
-                )
-              })
-            }
-          </tr>
-        ))
-      }
+      </tbody>
     </table>
   </div>
 )
+
+CalendarMonth.propTypes = {
+  mode: Props.mode,
+  selection: Props.selection,
+  year: PropTypes.number,
+  month: PropTypes.number,
+  n: PropTypes.number,
+  startDay: PropTypes.number,
+  reservation: PropTypes.arrayOf(PropTypes.string),
+  availableDates: PropTypes.arrayOf(PropTypes.string),
+  onDayClick: PropTypes.func
+}
 
 export default CalendarMonth

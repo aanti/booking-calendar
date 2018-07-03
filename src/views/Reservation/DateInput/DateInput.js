@@ -5,16 +5,11 @@ import Arrow from '../../../components/Arrow/Arrow'
 import Calendar from '../../../components/Calendar/Calendar'
 
 import { Dates, classes } from '../../../utils'
+import { ModeType } from '../../../utils/common'
 
 import './DateInput.css'
 
 const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21']
-
-const ModeType = {
-  off: 'off',
-  checkin: 'checkin',
-  checkout: 'checkout'
-}
 
 const CalendarFooter = ({ updateDate }) => (
   <div>
@@ -46,7 +41,7 @@ const CheckButton = ({ value, label, disabled, checked, onClick }) => {
     disabled && 'dateInput__check--disabled'
   ].filter(v => v)
   return (
-    <div className={classes(classnames)} onClick={!disabled && onClick}>
+    <div className={classes(classnames)} onClick={!disabled ? onClick : undefined}>
       {value || label}
     </div>
   )

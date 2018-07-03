@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
-
-import { getNumberOfDays, getDayOfWeek } from './utils/dates/dates'
 
 import Reservation from './views/Reservation/Reservation'
 
