@@ -20,10 +20,11 @@ export const outsideClickable =  (WrappedComponent) => (
     }
 
     handleMouseDown (e) {
+      const { onClickOutside } = this.props
       console.log(e)
       console.log(this.element.current)
       if (this.element.current && !this.element.current.contains(e.target)) {
-        console.log('OUTSIDE!')
+        onClickOutside && onClickOutside()
       }
     }
 

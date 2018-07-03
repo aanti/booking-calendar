@@ -99,6 +99,10 @@ Calendar.defaultProps = {
   onDayClick: () => {}
 }
 
-export default ({ onOutsideClick, ...rest }) => (onOutsideClick)
-  ? outsideClickable(React.forwardRef((props, ref) => <Calendar forwardedRef={ref} {...props} />))
+export default ({ onClickOutside, ...rest }) => (onClickOutside)
+  ? React.createElement(
+      outsideClickable(
+        React.forwardRef((props, ref) => <Calendar forwardedRef={ref} {...props} />)),
+        { onClickOutside, ...rest }
+    )
   : <Calendar {...rest} />

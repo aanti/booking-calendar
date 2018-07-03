@@ -57,17 +57,18 @@ class DateInput extends Component {
     super()
 
     this.state = {
-      calendarOpen: false,
       mode: ModeType.off,
       value: {
         from: null,
         to: null
       }
     }
+
+    this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
 
-  handleInputClick = () => {
-    this.setState(({ calendarOpen }) => ({ calendarOpen: !calendarOpen }))
+  handleOutsideClick = () => {
+    this.setState({ mode: ModeType.off })
   }
 
   handleCheckInClick = () => {
@@ -120,6 +121,7 @@ class DateInput extends Component {
               mode={mode}
               footerComponent={<CalendarFooter />}
               onDayClick={this.handleDayClick}
+              onClickOutside={this.handleOutsideClick}
             />
           )
         }
