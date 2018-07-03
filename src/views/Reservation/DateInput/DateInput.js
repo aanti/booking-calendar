@@ -61,11 +61,13 @@ class DateInput extends Component {
     }
   }
 
-  handleOutsideClick = () => {
+  handleOutsideClick = (e) => {
+    console.log('outside click')
     this.setState({ mode: ModeType.off })
   }
 
-  handleCheckInClick = () => {
+  handleCheckInClick = (e) => {
+    console.log('check in click', e)
     this.setState(({ mode }) => ({ mode: mode === ModeType.checkin ? ModeType.off : ModeType.checkin }))
   }
 
