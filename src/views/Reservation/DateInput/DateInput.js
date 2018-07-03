@@ -62,12 +62,10 @@ class DateInput extends Component {
   }
 
   handleOutsideClick = (e) => {
-    console.log('outside click')
     this.setState({ mode: ModeType.off })
   }
 
   handleCheckInClick = (e) => {
-    console.log('check in click', e)
     this.setState(({ mode }) => ({ mode: mode === ModeType.checkin ? ModeType.off : ModeType.checkin }))
   }
 
@@ -117,15 +115,18 @@ class DateInput extends Component {
         {
           (mode !== ModeType.off)
             ?
-              <Calendar
-                selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
-                availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
-                reservation={ReservationDates}
-                mode={mode}
-                footerComponent={<CalendarFooter />}
-                onDayClick={this.handleDayClick}
-                onClickOutside={this.handleOutsideClick}
-              />
+              <div>
+                <div className="dateInput__background" />
+                <Calendar
+                  selection={{ start: value.from, n: Dates.getDayDiff(value.from, value.to || value.from) }}
+                  availableDates={getAvailableEndDates({ start: value.from }, ReservationDates)}
+                  reservation={ReservationDates}
+                  mode={mode}
+                  footerComponent={<CalendarFooter />}
+                  onDayClick={this.handleDayClick}
+                  onClickOutside={this.handleOutsideClick}
+                />
+              </div>
             :
               this.renderSummary()
         }
