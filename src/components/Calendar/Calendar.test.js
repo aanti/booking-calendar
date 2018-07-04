@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 
-import Calendar, { CalendarPaper, CalendarContent } from './Calendar'
+import Calendar, { CalendarPaper, CalendarContent, Calendar as CalendarRawComponent, CalendarWithForwardRef } from './Calendar'
 import { DayType, ModeType } from '../../utils/common'
 import { Dates } from '../../utils'
 
@@ -23,6 +23,23 @@ describe('Calendar', () => {
     expect(wrapper.find(CalendarPaper).first().props().markerPosition).toEqual('left')
     wrapper.setProps({ mode: ModeType.checkout })
     expect(wrapper.find(CalendarPaper).first().props().markerPosition).toEqual('right')
+  })
+
+  it('changes state after onPrevMonthClick/onNextMonthClick', () => {
+    const mockPrevClick = jest.fn()
+    const mockNextClick = jest.fn()
+    const wrapper = mount(
+      <CalendarRawComponent {...basicProps} onPrevMonthClick={mockPrevClick} onNextMonthClick={mockNextClick} />
+    )
+
+    wrapper.find('.arrowButton').first().simulate('click')
+    expect(wrapper.state('date').year).toBe(2018)
+    expect(wrapper.state('date').month).toBe(7)
+
+    wrapper.find('.arrowButton').last().simulate('click')
+    wrapper.find('.arrowButton').last().simulate('click')
+    expect(wrapper.state('date').year).toBe(2018)
+    expect(wrapper.state('date').month).toBe(9)
   })
 })
 
@@ -46,7 +63,7 @@ describe('CalendarContent', () => {
   const currentDate = Dates.dateToObject(new Date())
   const dateOb = Dates.getNextMonth(currentDate)
   const basicProps = {
-    month: dateOb.month + 3,
+    month: dateOb.month,
     year: dateOb.year,
     mode: ModeType.checkin,
     footerComponent: <span className="footer">footer</span>,

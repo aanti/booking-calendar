@@ -24,7 +24,7 @@ export const getPrevMonth = ({ year, month }) => (month === 1)
 // month: [1, 12]
 export const getMonthName = month => Month[month - 1]
 
-const make2Chars = num => ('0' + num).slice(-2)
+export const make2Chars = num => ('0' + num).slice(-2)
 
 // month: [1, 12], day: [1-31]
 export const getDateString = (year, month, day) => `${year}/${make2Chars(month)}/${make2Chars(day)}`

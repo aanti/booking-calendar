@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react'
 import PropTypes from 'prop-types'
 
-export const outsideClickable =  (WrappedComponent) => (
+export const outsideClickable = (WrappedComponent) => (
   class extends Component {
     constructor () {
       super()

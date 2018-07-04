@@ -67,7 +67,7 @@ export const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, forw
   </div>
 )
 
-class Calendar extends Component {
+export class Calendar extends Component {
   constructor (props) {
     super(props)
     const { selection: { start } } = props
