@@ -11,7 +11,7 @@ import CalendarMonth from './CalendarMonth/CalendarMonth'
 
 import './Calendar.css'
 
-const CalendarContent = ({
+export const CalendarContent = ({
   month,
   year,
   footerComponent = null,
@@ -42,7 +42,18 @@ const CalendarContent = ({
   )
 }
 
-const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, forwardedRef, children }) => (
+CalendarContent.propTypes = {
+  month: PropTypes.number,
+  year: PropTypes.number,
+  footerComponent: PropTypes.element,
+  selection: PropTypes.object,
+  reservation: PropTypes.array,
+  availableDates: PropTypes.array,
+  onNextMonthClick: PropTypes.func,
+  onPrevMonthClick: PropTypes.func
+}
+
+export const CalendarPaper = ({ markerPosition = 'left', markerOffset = 50, forwardedRef, children }) => (
   <div className="calendarPaper" ref={forwardedRef}>
     <div
       className="calendarPaper__marker"

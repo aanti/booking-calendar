@@ -8,7 +8,7 @@ import { Props, DayType } from '../../../utils/common'
 
 import './CalendarMonth.css'
 
-const getTypes = (date, reservation, selection, availableDates) => {
+export const getTypes = (date, reservation, selection, availableDates) => {
   const selectionDates = Dates.getDaysArray(selection)
   return [
     (selectionDates.includes(date)) && DayType.selected,
@@ -25,8 +25,8 @@ const CalendarMonth = ({
   current,
   mode,
   selection,
-  reservation = [],
-  availableDates = [],
+  reservation,
+  availableDates,
   onDayClick
 }) => (
   <div>
@@ -69,13 +69,19 @@ const CalendarMonth = ({
   </div>
 )
 
+CalendarDay.defaultProps = {
+  reservation: [],
+  availableDates: [],
+  onDayClick: () => {}
+}
+
 CalendarMonth.propTypes = {
   mode: Props.mode,
   selection: Props.selection,
-  year: PropTypes.number,
-  month: PropTypes.number,
-  n: PropTypes.number,
-  startDay: PropTypes.number,
+  year: PropTypes.number.isRequired,
+  month: PropTypes.number.isRequired,
+  n: PropTypes.number.isRequired,
+  startDay: PropTypes.number.isRequired,
   reservation: PropTypes.arrayOf(PropTypes.string),
   availableDates: PropTypes.arrayOf(PropTypes.string),
   onDayClick: PropTypes.func
