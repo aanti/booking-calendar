@@ -8,12 +8,12 @@ import { Props, DayType } from '../../../utils/common'
 
 import './CalendarMonth.css'
 
-export const getTypes = (date, reservation, selection, availableDates) => {
+export const getTypes = (date, reservation, selection, availableDates, disablePast) => {
   const selectionDates = Dates.getDaysArray(selection)
   return [
     (selectionDates.includes(date)) && DayType.selected,
     (availableDates.includes(date)) && DayType.possible,
-    (reservation.includes(date) || Dates.isBefore(date)) ? DayType.disabled : DayType.available
+    (reservation.includes(date) || disablePast && Dates.isBefore(date)) ? DayType.disabled : DayType.available
   ].filter(v => v)
 }
 
@@ -47,6 +47,7 @@ const CalendarMonth = ({
               {
                 Array.from(Array(7).keys()).map(dayOfWeek => {
                   const day = 7 * week + dayOfWeek + 1 - startDay
+                  const dateString = Dates.getDateString(year, month, day)
                   return (
                     <CalendarDay
                       key={day}
@@ -54,7 +55,7 @@ const CalendarMonth = ({
                       month={month}
                       year={year}
                       mode={mode}
-                      types={getTypes(Dates.getDateString(year, month, day), reservation, selection, availableDates)}
+                      types={getTypes(dateString, reservation, selection, availableDates, true)}
                       n={n}
                       onDayClick={onDayClick}
                     />

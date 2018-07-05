@@ -9,7 +9,13 @@ import { ModeType } from '../../../utils/common'
 
 import './DateInput.css'
 
-const ReservationDates = ['2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21']
+const ReservationDates = [
+  '2018/07/08', '2018/07/09', '2018/07/12', '2018/07/19', '2018/07/20', '2018/07/21',
+  ...Dates.getDaysArray({ start: '2018/08/01', n: 3}),
+  ...Dates.getDaysArray({ start: '2018/08/10', n: 6}),
+  ...Dates.getDaysArray({ start: '2018/08/18', n: 3}),
+  ...Dates.getDaysArray({ start: '2018/09/04', n: 10 })
+]
 
 const CalendarFooter = ({ updateDate }) => (
   <div>
@@ -33,7 +39,7 @@ const getAvailableEndDates = (selection, reservation = [], max = 14) => {
   return result
 }
 
-const CheckButton = ({ value, label, disabled, checked, onClick }) => {
+export const CheckButton = ({ value, label, disabled, checked, onClick }) => {
   const classnames = [
     'dateInput__check',
     'button',
@@ -70,7 +76,6 @@ class DateInput extends Component {
 
   handleDayClick = (date) => {
     const available = getAvailableEndDates({ start: date }, ReservationDates)
-    console.log(available)
     this.setState(({ value, mode }) => ({
       value: {
         ...value,
@@ -87,7 +92,7 @@ class DateInput extends Component {
   }
 
   render () {
-    const { calendarOpen, value, mode, renderSummary } = this.state
+    const { value, mode } = this.state
     return (
       <div className="dateInput">
         <span className="dateInput__label">Dates</span>

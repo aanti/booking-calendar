@@ -10,7 +10,7 @@ import Summary from './Summary/Summary'
 
 import './Reservation.css'
 
-const Reservation = ({ price, rating, availableDates }) => (
+const Reservation = ({ price, rating }) => (
   <div className="reservation shadow">
     <Section>
       <BasicInfo price={price} rating={rating} />
@@ -18,5 +18,13 @@ const Reservation = ({ price, rating, availableDates }) => (
     </Section>
   </div>
 )
+
+Reservation.propTypes = {
+  price: PropTypes.number.isRequired,
+  rating: PropTypes.shape({
+    rate: PropTypes.number,
+    numberOfRates: PropTypes.number
+  })
+}
 
 export default Reservation

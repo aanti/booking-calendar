@@ -19,4 +19,14 @@ const BasicInfo = ({ price, currency = 'zł', rating: { rate, numberOfRates } })
   </div>
 )
 
+BasicInfo.propTypes = {
+  price: PropTypes.number.isRequired,
+  currency: PropTypes.string,
+  rating: PropTypes.shape({
+    rate: PropTypes.number,
+    numberOfRates: PropTypes.number
+  })
+}
+
+
 export default BasicInfo
