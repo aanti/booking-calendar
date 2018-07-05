@@ -10,4 +10,9 @@ const Marker = ({ fillColor = '#fff', borderColor = '#c8c8c8', ...props }) => (
   </svg>
 )
 
+Marker.propTypes = {
+  fillColor: PropTypes.string,
+  borderColor: PropTypes.string
+}
+
 export default Marker

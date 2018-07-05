@@ -10,10 +10,11 @@ import './CalendarMonth.css'
 
 export const getTypes = (date, reservation, selection, availableDates, disablePast) => {
   const selectionDates = Dates.getDaysArray(selection)
+  const shouldBeDisabed = disablePast && Dates.isBefore(date)
   return [
     (selectionDates.includes(date)) && DayType.selected,
     (availableDates.includes(date)) && DayType.possible,
-    (reservation.includes(date) || disablePast && Dates.isBefore(date)) ? DayType.disabled : DayType.available
+    (reservation.includes(date) || shouldBeDisabed) ? DayType.disabled : DayType.available
   ].filter(v => v)
 }
 

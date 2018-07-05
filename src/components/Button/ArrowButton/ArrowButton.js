@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import Arrow from '../../Arrow/Arrow'
@@ -15,5 +15,11 @@ const ArrowButton = ({ direction, disabled, onClick }) => (
     <Arrow direction={direction} color="gray" />
   </div>
 )
+
+ArrowButton.propTypes = {
+  direction: PropTypes.oneOf([DirectionType.left, DirectionType.right]),
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func
+}
 
 export default ArrowButton

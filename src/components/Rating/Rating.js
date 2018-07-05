@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import Star from '../Star/Star'
@@ -23,5 +23,13 @@ const Rating = ({ rate, max = 5, color = '#31aaa7', bgColor = '#fff', emptyColor
     }
   </div>
 )
+
+Rating.propTypes = {
+  rate: PropTypes.number,
+  max: PropTypes.number,
+  color: PropTypes.string,
+  emptyColor: PropTypes.string,
+  bgColor: PropTypes.string,
+}
 
 export default Rating

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Dates, outsideClickable } from '../../utils'
 
-import Section from '../Section/Section'
 import ArrowButton from '../Button/ArrowButton/ArrowButton'
 import Marker from '../Marker/Marker'
 

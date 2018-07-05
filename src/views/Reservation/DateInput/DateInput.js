@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import Arrow from '../../../components/Arrow/Arrow'
 import Calendar from '../../../components/Calendar/Calendar'

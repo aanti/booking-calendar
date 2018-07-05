@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import ColoredButton from '../../../components/Button/ColoredButton/ColoredButton'
@@ -9,7 +9,6 @@ import './Summary.css'
 
 const Summary = ({ from, to, price, currency = 'zł' }) => {
   const numberOfDays = Dates.getDayDiff(from, to)
-  const summaryPrice = numberOfDays * price
   return (
     <div className="summary">
       <div className="summary__item">
@@ -26,6 +25,13 @@ const Summary = ({ from, to, price, currency = 'zł' }) => {
       <ColoredButton>BOOK</ColoredButton>
     </div>
   )
+}
+
+Summary.propTypes = {
+  from: PropTypes.string,
+  to: PropTypes.string,
+  price: PropTypes.number,
+  currency: PropTypes.string
 }
 
 export default Summary
