@@ -1,6 +1,6 @@
 ## Booking-calendar
-Calendar component for booking purposes. 
-
+Calendar component for booking purposes.
+  ![example screen](https://raw.githubusercontent.com/aanti/booking-calendar/master/public/screen.png)
 To start the app, just run:
 ```
 yarn install
